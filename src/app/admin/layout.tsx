@@ -19,7 +19,7 @@ function AdminSidebar() {
     <aside className="hidden md:flex w-64 flex-col border-r bg-white">
       <div className="flex h-16 items-center border-b px-6">
         <Link href="/admin" className="text-lg font-bold text-primary">
-          Admin Panel
+          Notaris Annisa
         </Link>
       </div>
       <nav className="flex-1 p-4 space-y-1" aria-label="Admin navigation">
@@ -62,7 +62,7 @@ export default function AdminLayout({
         <div className="flex-1 flex flex-col">
           <header className="flex h-16 items-center border-b bg-white px-6 md:hidden">
             <Link href="/admin" className="text-lg font-bold text-primary">
-              Admin Panel
+              Notaris Annisa
             </Link>
           </header>
           {/* Mobile nav */}
