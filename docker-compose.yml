@@ -1,0 +1,11 @@
+services:
+  notary-platform:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notary-platform
+    ports:
+      - "3002:3000"
+    env_file:
+      - .env.local
+    restart: unless-stopped

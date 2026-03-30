@@ -1,0 +1,42 @@
+[
+  {
+    "keywords": ["jam", "buka", "operasional", "waktu"],
+    "answer": "Jam operasional notaris umumnya Senin-Jumat pukul 08:00-16:00 WIB. Silakan cek halaman notaris untuk informasi lebih detail."
+  },
+  {
+    "keywords": ["biaya", "harga", "tarif", "bayar"],
+    "answer": "Biaya layanan notaris bervariasi tergantung jenis layanan. Silakan lihat daftar layanan pada halaman notaris untuk informasi harga."
+  },
+  {
+    "keywords": ["dokumen", "berkas", "syarat", "persyaratan"],
+    "answer": "Dokumen yang diperlukan tergantung jenis layanan. Umumnya Anda memerlukan KTP, KK, dan dokumen pendukung lainnya. Format yang diterima: PDF, JPG, JPEG, PNG (maks 10MB)."
+  },
+  {
+    "keywords": ["tracking", "lacak", "status", "pesanan"],
+    "answer": "Anda dapat melacak pesanan menggunakan kode tracking yang diberikan saat pemesanan. Kunjungi halaman Tracking dan masukkan kode tracking Anda."
+  },
+  {
+    "keywords": ["daftar", "registrasi", "akun", "buat akun"],
+    "answer": "Untuk mendaftar, klik tombol Registrasi di halaman utama, lalu isi email dan password Anda."
+  },
+  {
+    "keywords": ["proses", "lama", "durasi", "berapa lama"],
+    "answer": "Waktu proses layanan notaris bervariasi tergantung jenis layanan, umumnya 3-14 hari kerja. Anda dapat memantau status melalui fitur tracking."
+  },
+  {
+    "keywords": ["batal", "cancel", "pembatalan"],
+    "answer": "Untuk pembatalan pesanan, silakan hubungi notaris terkait secara langsung melalui informasi kontak yang tersedia di halaman notaris."
+  },
+  {
+    "keywords": ["upload", "unggah", "kirim file"],
+    "answer": "Anda dapat mengunggah dokumen setelah membuat pesanan. Format yang diterima: PDF, JPG, JPEG, PNG dengan ukuran maksimal 10MB per file."
+  },
+  {
+    "keywords": ["kontak", "hubungi", "telepon", "email notaris"],
+    "answer": "Informasi kontak notaris tersedia di halaman profil masing-masing notaris. Anda dapat melihat nomor telepon dan email notaris di sana."
+  },
+  {
+    "keywords": ["revisi", "perbaikan", "koreksi"],
+    "answer": "Jika pesanan Anda memerlukan revisi, notaris akan mengubah status menjadi 'revisi' beserta catatan. Anda dapat mengunggah dokumen yang diperbaiki."
+  }
+]
