@@ -35,7 +35,7 @@ export function LoginForm() {
       } else if (result.user?.role === 'admin') {
         router.push('/admin')
       } else {
-        router.push('/')
+        router.push('/dashboard')
       }
     } catch {
       setError('Terjadi kesalahan. Silakan coba lagi.')

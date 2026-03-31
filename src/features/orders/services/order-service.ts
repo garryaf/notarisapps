@@ -15,6 +15,7 @@ export async function create(input: CreateOrderInput): Promise<Order> {
       tracking_code,
       user_name: input.user_name,
       user_email: input.user_email,
+      user_phone: input.user_phone || null,
       notary_id: input.notary_id,
       service_id: input.service_id,
       status: 'pending' as OrderStatus,
@@ -44,7 +45,7 @@ export async function create(input: CreateOrderInput): Promise<Order> {
   }
 
   // Send notification (fire-and-forget, don't block order creation)
-  notifyOrderCreated(order).catch(() => {})
+  notifyOrderCreated(order, input.user_phone).catch(() => {})
 
   return order
 }
@@ -156,7 +157,7 @@ export async function updateStatus(
   }
 
   // Send notification (fire-and-forget)
-  notifyStatusChange(updated as Order, order.status, newStatus).catch(() => {})
+  notifyStatusChange(updated as Order, order.status, newStatus, (order as any).user_phone).catch(() => {})
 
   return updated as Order
 }

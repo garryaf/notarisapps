@@ -2,17 +2,19 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Menu, X, Scale } from 'lucide-react'
+import { Menu, X, Scale, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useAuth } from '@/features/auth/hooks/use-auth'
+import { logout } from '@/features/auth/services/auth-service'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { user, isLoading, isAdmin } = useAuth()
 
-  const navLinks = [
+  const baseLinks = [
     { href: '/', label: 'Beranda' },
     { href: '/booking', label: 'Layanan' },
     { href: '/tracking', label: 'Lacak Pesanan' },
-    { href: '/login', label: 'Masuk' },
   ]
 
   return (
@@ -31,7 +33,7 @@ export function Header() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1" aria-label="Navigasi utama">
-          {navLinks.map((link) => (
+          {baseLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -40,6 +42,36 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+
+          {!isLoading && user ? (
+            <>
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  className="relative rounded-md px-3 py-2 text-sm font-medium text-[#8a8070] transition-colors hover:text-[#EAE3D2] after:absolute after:bottom-0 after:left-1/2 after:h-[1px] after:w-0 after:bg-[#EAE3D2] after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+                >
+                  Admin
+                </Link>
+              )}
+              <span className="px-3 py-2 text-sm text-[#EAE3D2]">
+                {user.name}
+              </span>
+              <button
+                onClick={() => logout()}
+                className="flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-[#8a8070] transition-colors hover:text-red-400"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                Logout
+              </button>
+            </>
+          ) : !isLoading ? (
+            <Link
+              href="/login"
+              className="relative rounded-md px-3 py-2 text-sm font-medium text-[#8a8070] transition-colors hover:text-[#EAE3D2] after:absolute after:bottom-0 after:left-1/2 after:h-[1px] after:w-0 after:bg-[#EAE3D2] after:transition-all after:duration-300 hover:after:left-0 hover:after:w-full"
+            >
+              Masuk
+            </Link>
+          ) : null}
         </nav>
 
         <Button
@@ -59,7 +91,7 @@ export function Header() {
           aria-label="Navigasi mobile"
         >
           <div className="flex flex-col px-4 py-2">
-            {navLinks.map((link) => (
+            {baseLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -69,6 +101,37 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
+            {!isLoading && user ? (
+              <>
+                {isAdmin && (
+                  <Link
+                    href="/admin"
+                    className="rounded-md py-3 px-2 text-sm font-medium text-[#8a8070] transition-colors hover:bg-white/5 hover:text-[#EAE3D2]"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Admin
+                  </Link>
+                )}
+                <div className="rounded-md py-3 px-2 text-sm text-[#EAE3D2]">
+                  {user.name}
+                </div>
+                <button
+                  onClick={() => { setMobileOpen(false); logout() }}
+                  className="flex items-center gap-1.5 rounded-md py-3 px-2 text-sm font-medium text-[#8a8070] transition-colors hover:bg-white/5 hover:text-red-400"
+                >
+                  <LogOut className="h-3.5 w-3.5" />
+                  Logout
+                </button>
+              </>
+            ) : !isLoading ? (
+              <Link
+                href="/login"
+                className="rounded-md py-3 px-2 text-sm font-medium text-[#8a8070] transition-colors hover:bg-white/5 hover:text-[#EAE3D2]"
+                onClick={() => setMobileOpen(false)}
+              >
+                Masuk
+              </Link>
+            ) : null}
           </div>
         </nav>
       )}

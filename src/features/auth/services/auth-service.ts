@@ -21,6 +21,9 @@ export async function register(
     ) {
       return { success: false, error: 'Email sudah terdaftar' }
     }
+    if (authError.message.includes('rate limit')) {
+      return { success: false, error: 'Terlalu banyak percobaan. Tunggu beberapa menit lalu coba lagi.' }
+    }
     return { success: false, error: authError.message }
   }
 
