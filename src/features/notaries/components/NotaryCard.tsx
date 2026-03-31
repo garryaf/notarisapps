@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { MapPin } from 'lucide-react'
 import type { Notary } from '../types'
 
@@ -9,20 +10,8 @@ interface NotaryCardProps {
 }
 
 export function NotaryCard({ notary, onClick }: NotaryCardProps) {
-  return (
-    <div
-      className="glass p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.07]"
-      onClick={() => onClick?.(notary)}
-      role="button"
-      tabIndex={0}
-      aria-label={`Notaris ${notary.name}`}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          onClick?.(notary)
-        }
-      }}
-    >
+  const content = (
+    <>
       <div className="flex items-center gap-4 mb-3">
         {notary.logo_url && (
           <img
@@ -44,6 +33,36 @@ export function NotaryCard({ notary, onClick }: NotaryCardProps) {
         </div>
       </div>
       <p className="text-sm text-[#8a8070]">{notary.address}</p>
-    </div>
+    </>
+  )
+
+  if (onClick) {
+    return (
+      <div
+        className="glass p-6 cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.07]"
+        onClick={() => onClick(notary)}
+        role="button"
+        tabIndex={0}
+        aria-label={`Notaris ${notary.name}`}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault()
+            onClick(notary)
+          }
+        }}
+      >
+        {content}
+      </div>
+    )
+  }
+
+  return (
+    <Link
+      href={`/notary/${notary.id}`}
+      className="glass p-6 block cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.07]"
+      aria-label={`Notaris ${notary.name}`}
+    >
+      {content}
+    </Link>
   )
 }

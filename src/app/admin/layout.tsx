@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, ClipboardList, Users } from 'lucide-react'
+import { LayoutDashboard, ClipboardList, Users, Briefcase } from 'lucide-react'
 import { AuthGuard } from '@/features/auth/components/AuthGuard'
 import { cn } from '@/lib/utils'
 
@@ -10,6 +10,7 @@ const sidebarLinks = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/orders', label: 'Pesanan', icon: ClipboardList },
   { href: '/admin/notaries', label: 'Notaris', icon: Users },
+  { href: '/admin/services', label: 'Layanan', icon: Briefcase },
 ]
 
 function AdminSidebar() {

@@ -66,7 +66,7 @@ export function ServiceForm({ notaryId, service, onSuccess, onCancel }: ServiceF
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="service-name">Nama Layanan</Label>
+        <Label htmlFor="service-name" className="font-serif text-[#EAE3D2]">Nama Layanan</Label>
         <Input
           id="service-name"
           value={name}
@@ -74,10 +74,11 @@ export function ServiceForm({ notaryId, service, onSuccess, onCancel }: ServiceF
           placeholder="Nama layanan"
           aria-label="Nama Layanan"
           required
+          className="bg-white/5 border-white/10 text-[#EAE3D2] placeholder:text-[#8a8070]/50"
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="service-description">Deskripsi</Label>
+        <Label htmlFor="service-description" className="font-serif text-[#EAE3D2]">Deskripsi</Label>
         <Input
           id="service-description"
           value={description}
@@ -85,10 +86,11 @@ export function ServiceForm({ notaryId, service, onSuccess, onCancel }: ServiceF
           placeholder="Deskripsi layanan"
           aria-label="Deskripsi"
           required
+          className="bg-white/5 border-white/10 text-[#EAE3D2] placeholder:text-[#8a8070]/50"
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="service-price">Harga (IDR)</Label>
+        <Label htmlFor="service-price" className="font-serif text-[#EAE3D2]">Harga (IDR)</Label>
         <Input
           id="service-price"
           type="number"
@@ -98,19 +100,20 @@ export function ServiceForm({ notaryId, service, onSuccess, onCancel }: ServiceF
           aria-label="Harga"
           min="1"
           required
+          className="bg-white/5 border-white/10 text-[#EAE3D2] placeholder:text-[#8a8070]/50"
         />
       </div>
       {error && (
-        <p className="text-sm text-red-600" role="alert">
+        <p className="text-sm text-red-400" role="alert">
           {error}
         </p>
       )}
       <div className="flex gap-2">
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading} className="bg-[#1F2A24] text-[#EAE3D2] hover:bg-[#2a3a30]">
           {isLoading ? 'Menyimpan...' : isEditing ? 'Perbarui' : 'Tambah'}
         </Button>
         {onCancel && (
-          <Button type="button" variant="outline" onClick={onCancel}>
+          <Button type="button" variant="outline" onClick={onCancel} className="border-white/10 text-[#EAE3D2] hover:bg-white/5">
             Batal
           </Button>
         )}
