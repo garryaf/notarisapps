@@ -73,25 +73,27 @@ export function ChatbotWidget() {
   return (
     <div className="fixed bottom-4 right-4 z-50">
       {isOpen ? (
-        <div className="flex flex-col w-80 h-96 bg-white border rounded-lg shadow-lg">
-          <div className="flex items-center justify-between p-3 border-b bg-primary text-primary-foreground rounded-t-lg">
-            <span className="font-semibold text-sm">Asisten Notaris</span>
+        <div className="flex flex-col w-80 h-96 glass overflow-hidden">
+          <div className="flex items-center justify-between p-3 border-b border-white/10 bg-[#1F2A24]">
+            <span className="font-serif font-semibold text-sm text-[#EAE3D2]">
+              Asisten Notaris
+            </span>
             <Button
               variant="ghost"
               size="icon"
-              className="h-6 w-6 text-primary-foreground hover:text-primary-foreground/80"
+              className="h-6 w-6 text-[#EAE3D2] hover:text-[#EAE3D2]/80 hover:bg-white/10"
               onClick={() => setIsOpen(false)}
               aria-label="Tutup chat"
             >
               <X className="h-4 w-4" />
             </Button>
           </div>
-          <div className="flex-1 overflow-y-auto p-3 space-y-2">
+          <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-[#0D0D0D]/80">
             {messages.map(msg => (
               <ChatMessage key={msg.id} sender={msg.sender} message={msg.message} />
             ))}
             {isLoading && (
-              <div className="text-xs text-muted-foreground">Mengetik...</div>
+              <div className="text-xs text-[#8a8070]">Mengetik...</div>
             )}
             <div ref={messagesEndRef} />
           </div>
@@ -100,7 +102,7 @@ export function ChatbotWidget() {
       ) : (
         <Button
           size="icon"
-          className="h-14 w-14 rounded-full shadow-lg"
+          className="h-14 w-14 rounded-full shadow-lg bg-[#1F2A24] text-[#EAE3D2] hover:bg-[#2a3a30]"
           onClick={() => setIsOpen(true)}
           aria-label="Buka chatbot"
         >

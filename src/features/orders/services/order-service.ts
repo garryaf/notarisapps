@@ -3,6 +3,7 @@ import type { Order, OrderStatus } from '@/types/database'
 import type { CreateOrderInput, OrderFilters, OrderWithDetails } from '../types'
 import { generateTrackingCode } from './tracking-code-generator'
 import { isValidTransition } from './status-machine'
+import { notifyOrderCreated, notifyStatusChange } from '@/features/notifications/services/notification-service'
 
 export async function create(input: CreateOrderInput): Promise<Order> {
   const supabase = createClient()
@@ -41,6 +42,9 @@ export async function create(input: CreateOrderInput): Promise<Order> {
   if (historyError) {
     throw new Error(historyError.message)
   }
+
+  // Send notification (fire-and-forget, don't block order creation)
+  notifyOrderCreated(order).catch(() => {})
 
   return order
 }
@@ -150,6 +154,9 @@ export async function updateStatus(
   if (historyError) {
     throw new Error(historyError.message)
   }
+
+  // Send notification (fire-and-forget)
+  notifyStatusChange(updated as Order, order.status, newStatus).catch(() => {})
 
   return updated as Order
 }

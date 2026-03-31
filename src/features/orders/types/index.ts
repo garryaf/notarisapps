@@ -3,6 +3,7 @@ import type { Order, OrderStatus, Notary, Service, Document, StatusHistory } fro
 export type CreateOrderInput = {
   user_name: string
   user_email: string
+  user_phone?: string
   notary_id: string
   service_id: string
 }

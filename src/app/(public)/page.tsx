@@ -6,7 +6,7 @@ import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { NotaryList } from '@/features/notaries/components/NotaryList'
 import { getAll } from '@/features/notaries/services/notary-service'
-import { Scale, FileText, Search, Shield, Clock, CheckCircle } from 'lucide-react'
+import { Scale, FileText, Search, Shield, Clock, CheckCircle, ArrowRight } from 'lucide-react'
 import type { Notary } from '@/types/database'
 
 const features = [
@@ -14,21 +14,29 @@ const features = [
     icon: FileText,
     title: 'Pesan Online',
     description: 'Ajukan layanan notaris kapan saja tanpa perlu datang ke kantor.',
+    href: '/booking',
+    actionLabel: 'Pesan Sekarang',
   },
   {
     icon: Search,
     title: 'Lacak Pesanan',
     description: 'Pantau progres pesanan Anda secara real-time dengan kode tracking.',
+    href: '/tracking',
+    actionLabel: 'Lacak Sekarang',
   },
   {
     icon: Shield,
     title: 'Aman & Terpercaya',
     description: 'Dokumen Anda dilindungi dengan enkripsi dan keamanan berlapis.',
+    href: null,
+    actionLabel: null,
   },
   {
     icon: Clock,
     title: 'Proses Cepat',
     description: 'Layanan notaris yang efisien dengan estimasi waktu yang jelas.',
+    href: null,
+    actionLabel: null,
   },
 ]
 
@@ -36,13 +44,16 @@ export default function LandingPage() {
   const [notaries, setNotaries] = useState<Notary[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [heroVisible, setHeroVisible] = useState(false)
+  const [featuresVisible, setFeaturesVisible] = useState(false)
 
   useEffect(() => {
     setHeroVisible(true)
+    const timer = setTimeout(() => setFeaturesVisible(true), 300)
     getAll()
       .then(setNotaries)
       .catch(() => {})
       .finally(() => setIsLoading(false))
+    return () => clearTimeout(timer)
   }, [])
 
   return (
@@ -96,21 +107,54 @@ export default function LandingPage() {
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature, i) => {
               const Icon = feature.icon
+              const isClickable = !!feature.href
+
+              const cardContent = (
+                <CardContent className="pt-6 text-center">
+                  <div className={`mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl transition-colors ${
+                    isClickable
+                      ? 'bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground'
+                      : 'bg-muted text-muted-foreground'
+                  }`}>
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-sm font-semibold">{feature.title}</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+                    {feature.description}
+                  </p>
+                  {isClickable && (
+                    <p className="mt-3 flex items-center justify-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                      {feature.actionLabel}
+                      <ArrowRight className="h-3 w-3" />
+                    </p>
+                  )}
+                </CardContent>
+              )
+
+              if (isClickable) {
+                return (
+                  <Link key={feature.title} href={feature.href!} className="group">
+                    <Card
+                      className={`h-full border-0 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 cursor-pointer ${
+                        featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                      }`}
+                      style={{ transitionDelay: `${i * 100}ms` }}
+                    >
+                      {cardContent}
+                    </Card>
+                  </Link>
+                )
+              }
+
               return (
                 <Card
                   key={feature.title}
-                  className="group border-0 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1"
-                  style={{ animationDelay: `${i * 100}ms` }}
+                  className={`h-full border-0 shadow-sm transition-all duration-500 ${
+                    featuresVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                  }`}
+                  style={{ transitionDelay: `${i * 100}ms` }}
                 >
-                  <CardContent className="pt-6 text-center">
-                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <h3 className="text-sm font-semibold">{feature.title}</h3>
-                    <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </CardContent>
+                  {cardContent}
                 </Card>
               )
             })}

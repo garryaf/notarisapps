@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import {
   Select,
   SelectTrigger,
@@ -30,6 +29,7 @@ export function BookingForm({ onSuccess }: BookingFormProps) {
   const [selectedServiceId, setSelectedServiceId] = useState('')
   const [userName, setUserName] = useState('')
   const [userEmail, setUserEmail] = useState('')
+  const [userPhone, setUserPhone] = useState('')
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -62,6 +62,7 @@ export function BookingForm({ onSuccess }: BookingFormProps) {
       const order = await create({
         user_name: userName.trim(),
         user_email: userEmail.trim(),
+        user_phone: userPhone.trim() || undefined,
         notary_id: selectedNotaryId,
         service_id: selectedServiceId,
       })
@@ -74,84 +75,101 @@ export function BookingForm({ onSuccess }: BookingFormProps) {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Pesan Layanan Notaris</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="booking-notary">Pilih Notaris</Label>
-            <Select value={selectedNotaryId} onValueChange={(v) => setSelectedNotaryId(v ?? '')}>
-              <SelectTrigger id="booking-notary" aria-label="Pilih Notaris" className="w-full">
-                <SelectValue placeholder="Pilih notaris" />
-              </SelectTrigger>
-              <SelectContent>
-                {notaries.map((n) => (
-                  <SelectItem key={n.id} value={n.id}>
-                    {n.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+    <div className="glass p-6">
+      <h2 className="font-serif text-lg font-semibold text-[#EAE3D2] mb-4">
+        Pesan Layanan Notaris
+      </h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="booking-notary" className="text-[#EAE3D2]">Pilih Notaris</Label>
+          <Select value={selectedNotaryId} onValueChange={(v) => setSelectedNotaryId(v ?? '')}>
+            <SelectTrigger id="booking-notary" aria-label="Pilih Notaris" className="w-full bg-white/5 border-white/10 text-[#EAE3D2]">
+              <SelectValue placeholder="Pilih notaris" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#1a1a1a] border-white/10">
+              {notaries.map((n) => (
+                <SelectItem key={n.id} value={n.id} className="text-[#EAE3D2] focus:bg-white/10 focus:text-[#EAE3D2]">
+                  {n.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="booking-service">Pilih Layanan</Label>
-            <Select
-              value={selectedServiceId}
-              onValueChange={(v) => setSelectedServiceId(v ?? '')}
-              disabled={!selectedNotaryId}
-            >
-              <SelectTrigger id="booking-service" aria-label="Pilih Layanan" className="w-full">
-                <SelectValue placeholder="Pilih layanan" />
-              </SelectTrigger>
-              <SelectContent>
-                {services.map((s) => (
-                  <SelectItem key={s.id} value={s.id}>
-                    {s.name} - Rp {s.price.toLocaleString('id-ID')}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="booking-service" className="text-[#EAE3D2]">Pilih Layanan</Label>
+          <Select
+            value={selectedServiceId}
+            onValueChange={(v) => setSelectedServiceId(v ?? '')}
+            disabled={!selectedNotaryId}
+          >
+            <SelectTrigger id="booking-service" aria-label="Pilih Layanan" className="w-full bg-white/5 border-white/10 text-[#EAE3D2]">
+              <SelectValue placeholder="Pilih layanan" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#1a1a1a] border-white/10">
+              {services.map((s) => (
+                <SelectItem key={s.id} value={s.id} className="text-[#EAE3D2] focus:bg-white/10 focus:text-[#EAE3D2]">
+                  {s.name} - Rp {s.price.toLocaleString('id-ID')}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="booking-name">Nama Lengkap</Label>
-            <Input
-              id="booking-name"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-              placeholder="Nama lengkap Anda"
-              aria-label="Nama Lengkap"
-              required
-            />
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="booking-name" className="text-[#EAE3D2]">Nama Lengkap</Label>
+          <Input
+            id="booking-name"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+            placeholder="Nama lengkap Anda"
+            aria-label="Nama Lengkap"
+            required
+            className="bg-white/5 border-white/10 text-[#EAE3D2] placeholder:text-[#8a8070]/50"
+          />
+        </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="booking-email">Email</Label>
-            <Input
-              id="booking-email"
-              type="email"
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
-              placeholder="email@contoh.com"
-              aria-label="Email"
-              required
-            />
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="booking-email" className="text-[#EAE3D2]">Email</Label>
+          <Input
+            id="booking-email"
+            type="email"
+            value={userEmail}
+            onChange={(e) => setUserEmail(e.target.value)}
+            placeholder="email@contoh.com"
+            aria-label="Email"
+            required
+            className="bg-white/5 border-white/10 text-[#EAE3D2] placeholder:text-[#8a8070]/50"
+          />
+        </div>
 
-          {error && (
-            <p className="text-sm text-red-600" role="alert">
-              {error}
-            </p>
-          )}
+        <div className="space-y-2">
+          <Label htmlFor="booking-phone" className="text-[#EAE3D2]">No. WhatsApp (opsional)</Label>
+          <Input
+            id="booking-phone"
+            type="tel"
+            value={userPhone}
+            onChange={(e) => setUserPhone(e.target.value)}
+            placeholder="08xxxxxxxxxx"
+            aria-label="Nomor WhatsApp"
+            className="bg-white/5 border-white/10 text-[#EAE3D2] placeholder:text-[#8a8070]/50"
+          />
+        </div>
 
-          <Button type="submit" disabled={isLoading} className="w-full">
-            {isLoading ? 'Memproses...' : 'Pesan Sekarang'}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+        {error && (
+          <p className="text-sm text-red-400" role="alert">
+            {error}
+          </p>
+        )}
+
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-[#1F2A24] text-[#EAE3D2] hover:bg-[#2a3a30]"
+        >
+          {isLoading ? 'Memproses...' : 'Pesan Sekarang'}
+        </Button>
+      </form>
+    </div>
   )
 }

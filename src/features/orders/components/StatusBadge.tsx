@@ -5,11 +5,11 @@ import { cn } from '@/lib/utils'
 import type { OrderStatus } from '@/types/database'
 
 const STATUS_COLORS: Record<OrderStatus, string> = {
-  pending: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-  verifikasi: 'bg-blue-100 text-blue-800 border-blue-300',
-  diproses: 'bg-orange-100 text-orange-800 border-orange-300',
-  revisi: 'bg-red-100 text-red-800 border-red-300',
-  selesai: 'bg-green-100 text-green-800 border-green-300',
+  pending: 'bg-yellow-900/40 text-yellow-300 border-yellow-700/50',
+  verifikasi: 'bg-blue-900/40 text-blue-300 border-blue-700/50',
+  diproses: 'bg-orange-900/40 text-orange-300 border-orange-700/50',
+  revisi: 'bg-red-900/40 text-red-300 border-red-700/50',
+  selesai: 'bg-green-900/40 text-green-300 border-green-700/50',
 }
 
 const STATUS_LABELS: Record<OrderStatus, string> = {
