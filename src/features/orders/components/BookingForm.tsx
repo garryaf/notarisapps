@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -25,6 +25,7 @@ interface BookingFormProps {
 export function BookingForm({ onSuccess }: BookingFormProps) {
   const [notaries, setNotaries] = useState<Notary[]>([])
   const [services, setServices] = useState<Service[]>([])
+  const [selectedRegion, setSelectedRegion] = useState('')
   const [selectedNotaryId, setSelectedNotaryId] = useState('')
   const [selectedServiceId, setSelectedServiceId] = useState('')
   const [userName, setUserName] = useState('')
@@ -36,6 +37,24 @@ export function BookingForm({ onSuccess }: BookingFormProps) {
   useEffect(() => {
     getAllNotaries().then(setNotaries).catch(() => setError('Gagal memuat data notaris'))
   }, [])
+
+  const uniqueRegions = useMemo(() => {
+    const regions = notaries
+      .map((n) => n.region)
+      .filter((r) => r && r.trim() !== '')
+    return [...new Set(regions)].sort()
+  }, [notaries])
+
+  const filteredNotaries = useMemo(() => {
+    if (!selectedRegion) return notaries
+    return notaries.filter((n) => n.region === selectedRegion)
+  }, [notaries, selectedRegion])
+
+  useEffect(() => {
+    setSelectedNotaryId('')
+    setSelectedServiceId('')
+    setServices([])
+  }, [selectedRegion])
 
   useEffect(() => {
     if (selectedNotaryId) {
@@ -81,15 +100,34 @@ export function BookingForm({ onSuccess }: BookingFormProps) {
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
+          <Label htmlFor="booking-region" className="text-[#EAE3D2]">Pilih Daerah</Label>
+          <Select value={selectedRegion || 'all'} onValueChange={(v) => setSelectedRegion(v === 'all' ? '' : (v ?? ''))}>
+            <SelectTrigger id="booking-region" aria-label="Pilih Daerah" className="w-full bg-white/5 border-white/10 text-[#EAE3D2]">
+              <SelectValue placeholder="Semua daerah" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#1a1a1a] border-white/10">
+              <SelectItem value="all" className="text-[#EAE3D2] focus:bg-white/10 focus:text-[#EAE3D2]">
+                Semua Daerah
+              </SelectItem>
+              {uniqueRegions.map((r) => (
+                <SelectItem key={r} value={r} className="text-[#EAE3D2] focus:bg-white/10 focus:text-[#EAE3D2]">
+                  {r}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
           <Label htmlFor="booking-notary" className="text-[#EAE3D2]">Pilih Notaris</Label>
           <Select value={selectedNotaryId} onValueChange={(v) => setSelectedNotaryId(v ?? '')}>
             <SelectTrigger id="booking-notary" aria-label="Pilih Notaris" className="w-full bg-white/5 border-white/10 text-[#EAE3D2]">
               <SelectValue placeholder="Pilih notaris" />
             </SelectTrigger>
             <SelectContent className="bg-[#1a1a1a] border-white/10">
-              {notaries.map((n) => (
+              {filteredNotaries.map((n) => (
                 <SelectItem key={n.id} value={n.id} className="text-[#EAE3D2] focus:bg-white/10 focus:text-[#EAE3D2]">
-                  {n.name}
+                  {n.name}{n.region ? ` — ${n.region}` : ''}
                 </SelectItem>
               ))}
             </SelectContent>

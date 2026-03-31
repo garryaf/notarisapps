@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { OrderDetail } from '@/features/orders/components/OrderDetail'
 import { StatusUpdateForm } from '@/features/orders/components/StatusUpdateForm'
 import { DocumentList } from '@/features/documents/components/DocumentList'
@@ -34,42 +33,34 @@ export default function AdminOrderDetailPage() {
   }, [params.id])
 
   if (isLoading) {
-    return <p className="p-6">Memuat detail pesanan...</p>
+    return <p className="p-6 text-[#8a8070]">Memuat detail pesanan...</p>
   }
 
   if (!order) {
-    return <p className="p-6">Pesanan tidak ditemukan.</p>
+    return <p className="p-6 text-[#8a8070]">Pesanan tidak ditemukan.</p>
   }
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Detail Pesanan</h1>
+      <h1 className="font-serif text-2xl font-bold text-[#EAE3D2]">Detail Pesanan</h1>
 
       <OrderDetail order={order} />
 
       {/* Documents */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Dokumen</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <DocumentList documents={order.documents || []} />
-        </CardContent>
-      </Card>
+      <div className="glass p-6">
+        <h2 className="font-serif text-lg font-semibold text-[#EAE3D2] mb-4">Dokumen</h2>
+        <DocumentList documents={order.documents || []} />
+      </div>
 
       {/* Status Update */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Perbarui Status</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <StatusUpdateForm
-            order={order}
-            changedBy={user?.id || 'admin'}
-            onSuccess={() => loadOrder()}
-          />
-        </CardContent>
-      </Card>
+      <div className="glass p-6">
+        <h2 className="font-serif text-lg font-semibold text-[#EAE3D2] mb-4">Perbarui Status</h2>
+        <StatusUpdateForm
+          order={order}
+          changedBy={user?.id || 'admin'}
+          onSuccess={() => loadOrder()}
+        />
+      </div>
     </div>
   )
 }

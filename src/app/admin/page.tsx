@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { OrderList } from '@/features/orders/components/OrderList'
 import { getAll } from '@/features/orders/services/order-service'
 import type { Order, OrderStatus } from '@/types/database'
@@ -43,35 +42,27 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
+      <h1 className="font-serif text-2xl font-bold text-[#EAE3D2]">Dashboard</h1>
 
       {/* Status Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         {ALL_STATUSES.map((status) => (
-          <Card key={status}>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
-                {STATUS_LABELS[status]}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl font-bold">
-                {isLoading ? '...' : statusCounts[status]}
-              </p>
-            </CardContent>
-          </Card>
+          <div key={status} className="glass p-4">
+            <p className="text-sm font-medium text-[#8a8070] mb-1">
+              {STATUS_LABELS[status]}
+            </p>
+            <p className="text-2xl font-bold text-[#EAE3D2]">
+              {isLoading ? '...' : statusCounts[status]}
+            </p>
+          </div>
         ))}
       </div>
 
-      {/* Order List with Filters */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Daftar Pesanan</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <OrderList onSelect={handleSelectOrder} />
-        </CardContent>
-      </Card>
+      {/* Order List */}
+      <div className="glass p-6">
+        <h2 className="font-serif text-lg font-semibold text-[#EAE3D2] mb-4">Daftar Pesanan</h2>
+        <OrderList onSelect={handleSelectOrder} />
+      </div>
     </div>
   )
 }

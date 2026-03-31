@@ -48,7 +48,7 @@ export async function updateOrderStatus(
 }
 
 export async function createNotary(input: {
-  name: string; address: string; phone: string; email: string; logo_url: string
+  name: string; address: string; phone: string; email: string; logo_url: string; region: string
 }): Promise<ActionResult<Notary>> {
   try {
     const supabase = await createClient()
@@ -61,7 +61,7 @@ export async function createNotary(input: {
 }
 
 export async function updateNotary(
-  id: string, input: Partial<{ name: string; address: string; phone: string; email: string; logo_url: string }>
+  id: string, input: Partial<{ name: string; address: string; phone: string; email: string; logo_url: string; region: string }>
 ): Promise<ActionResult<Notary>> {
   try {
     const supabase = await createClient()

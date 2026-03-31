@@ -20,6 +20,7 @@ export interface Notary {
   phone: string
   email: string
   logo_url: string
+  region: string
   created_at: string
 }
 

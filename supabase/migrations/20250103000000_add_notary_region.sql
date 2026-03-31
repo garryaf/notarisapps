@@ -1,0 +1,1 @@
+ALTER TABLE notaries ADD COLUMN region TEXT NOT NULL DEFAULT '';

@@ -6,6 +6,7 @@ export type CreateNotaryInput = {
   phone: string
   email: string
   logo_url: string
+  region: string
 }
 
 export type UpdateNotaryInput = Partial<CreateNotaryInput>

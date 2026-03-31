@@ -52,24 +52,27 @@ export default function AdminNotariesPage() {
   }
 
   if (isLoading) {
-    return <p className="p-6">Memuat data notaris...</p>
+    return <p className="p-6 text-[#8a8070]">Memuat data notaris...</p>
   }
 
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Manajemen Notaris</h1>
+        <h1 className="font-serif text-2xl font-bold text-[#EAE3D2]">Manajemen Notaris</h1>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger
             render={
-              <Button onClick={() => setEditingNotary(null)}>
+              <Button
+                onClick={() => setEditingNotary(null)}
+                className="bg-[#1F2A24] text-[#EAE3D2] hover:bg-[#2a3a30]"
+              >
                 Tambah Notaris
               </Button>
             }
           />
-          <DialogContent>
+          <DialogContent className="bg-[#141414] border-white/10 text-[#EAE3D2]">
             <DialogHeader>
-              <DialogTitle>
+              <DialogTitle className="font-serif text-[#EAE3D2]">
                 {editingNotary ? 'Edit Notaris' : 'Tambah Notaris Baru'}
               </DialogTitle>
             </DialogHeader>
